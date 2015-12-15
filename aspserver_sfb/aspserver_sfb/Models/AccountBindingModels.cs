@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace SFB.Models
+namespace aspserver_sfb.Models
 {
     // Modelle, die als Parameter für AccountController-Aktionen verwendet werden.
 

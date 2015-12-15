@@ -19,7 +19,7 @@ namespace SFB.Models
         {
         }
 
-        public System.Data.Entity.DbSet<SFB.Models.User> Users { get; set; }
+       
 
         public System.Data.Entity.DbSet<SFB.Models.TauschObj> TauschObjs { get; set; }
     }

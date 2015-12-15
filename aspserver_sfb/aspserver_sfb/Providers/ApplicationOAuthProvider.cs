@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using SFB.Models;
+using aspserver_sfb.Models;
 
-namespace SFB.Providers
+namespace aspserver_sfb.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

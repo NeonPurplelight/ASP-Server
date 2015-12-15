@@ -13,11 +13,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using SFB.Models;
-using SFB.Providers;
-using SFB.Results;
+using aspserver_sfb.Models;
+using aspserver_sfb.Providers;
+using aspserver_sfb.Results;
 
-namespace SFB.Controllers
+namespace aspserver_sfb.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]

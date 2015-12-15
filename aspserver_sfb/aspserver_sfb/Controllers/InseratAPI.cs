@@ -6,44 +6,45 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
-using SFB.Models;
+using aspserver_sfb.Models;
 
-namespace SFB.Controllers
+namespace aspserver_sfb.Controllers
 {
     /*
     Die Klasse "WebApiConfig" erfordert ggf. weitere Änderungen zum Hinzufügen einer Route für diesen Controller. Führen Sie diese Anweisungen in der Methode "Register" der Klasse "WebApiConfig" ordnungsgemäß zusammen. Beachten Sie, dass für OData-URLs zwischen Groß- und Kleinschreibung unterschieden wird.
 
     using System.Web.Http.OData.Builder;
     using System.Web.Http.OData.Extensions;
-    using SFB.Models;
+    using aspserver_sfb.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<User>("Users");
+    builder.EntitySet<Inserat>("InseratAPI");
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class UsersController : ODataController
+    public class InseratAPI : ODataController
     {
-        private SFBContext db = new SFBContext();
+        private InseratContext db = new InseratContext();
 
-        // GET: odata/Users
+        // GET: odata/InseratAPI
         [EnableQuery]
-        public IQueryable<User> GetUsers()
+        public IQueryable<Inserat> GetInseratAPI()
         {
-            return db.Users;
+            return db.Inserats;
         }
 
-        // GET: odata/Users(5)
+        // GET: odata/InseratAPI(5)
         [EnableQuery]
-        public SingleResult<User> GetUser([FromODataUri] int key)
+        public SingleResult<Inserat> GetInserat([FromODataUri] int key)
         {
-            return SingleResult.Create(db.Users.Where(user => user.ID == key));
+            return SingleResult.Create(db.Inserats.Where(inserat => inserat.ID == key));
         }
 
-        // PUT: odata/Users(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<User> patch)
+        // PUT: odata/InseratAPI(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<Inserat> patch)
         {
             Validate(patch.GetEntity());
 
@@ -52,21 +53,21 @@ namespace SFB.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = db.Users.Find(key);
-            if (user == null)
+            Inserat inserat = await db.Inserats.FindAsync(key);
+            if (inserat == null)
             {
                 return NotFound();
             }
 
-            patch.Put(user);
+            patch.Put(inserat);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(key))
+                if (!InseratExists(key))
                 {
                     return NotFound();
                 }
@@ -76,26 +77,26 @@ namespace SFB.Controllers
                 }
             }
 
-            return Updated(user);
+            return Updated(inserat);
         }
 
-        // POST: odata/Users
-        public IHttpActionResult Post(User user)
+        // POST: odata/InseratAPI
+        public async Task<IHttpActionResult> Post(Inserat inserat)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Users.Add(user);
-            db.SaveChanges();
+            db.Inserats.Add(inserat);
+            await db.SaveChangesAsync();
 
-            return Created(user);
+            return Created(inserat);
         }
 
-        // PATCH: odata/Users(5)
+        // PATCH: odata/InseratAPI(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<User> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Inserat> patch)
         {
             Validate(patch.GetEntity());
 
@@ -104,21 +105,21 @@ namespace SFB.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = db.Users.Find(key);
-            if (user == null)
+            Inserat inserat = await db.Inserats.FindAsync(key);
+            if (inserat == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(user);
+            patch.Patch(inserat);
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(key))
+                if (!InseratExists(key))
                 {
                     return NotFound();
                 }
@@ -128,20 +129,20 @@ namespace SFB.Controllers
                 }
             }
 
-            return Updated(user);
+            return Updated(inserat);
         }
 
-        // DELETE: odata/Users(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
+        // DELETE: odata/InseratAPI(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            User user = db.Users.Find(key);
-            if (user == null)
+            Inserat inserat = await db.Inserats.FindAsync(key);
+            if (inserat == null)
             {
                 return NotFound();
             }
 
-            db.Users.Remove(user);
-            db.SaveChanges();
+            db.Inserats.Remove(inserat);
+            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -155,9 +156,9 @@ namespace SFB.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UserExists(int key)
+        private bool InseratExists(int key)
         {
-            return db.Users.Count(e => e.ID == key) > 0;
+            return db.Inserats.Count(e => e.ID == key) > 0;
         }
     }
 }

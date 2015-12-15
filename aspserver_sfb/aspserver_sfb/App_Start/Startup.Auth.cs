@@ -8,10 +8,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using SFB.Providers;
-using SFB.Models;
+using aspserver_sfb.Providers;
+using aspserver_sfb.Models;
 
-namespace SFB
+namespace aspserver_sfb
 {
     public partial class Startup
     {

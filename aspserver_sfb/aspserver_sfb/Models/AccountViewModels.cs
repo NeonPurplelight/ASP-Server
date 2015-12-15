@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SFB.Models
+namespace aspserver_sfb.Models
 {
     // Von AccountController-Aktionen zurückgegebene Modelle.
 
